@@ -214,6 +214,9 @@ void draw() {
     for (int i=0; i<playerHealth; i++) {
       image(life, i*70+10, 10);
     }
+    if (playerHealth<1){
+     gameState=GAME_OVER; 
+    }
     break;
 
   case GAME_OVER : // Gameover Screen
@@ -227,6 +230,7 @@ void draw() {
       image(restartHovered, START_BUTTON_X, START_BUTTON_Y);
       if (mousePressed) {
         gameState = GAME_RUN;
+        playerHealth=2;
         mousePressed = false;
         // Remember to initialize the game here!
       }
