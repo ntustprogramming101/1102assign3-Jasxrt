@@ -14,7 +14,7 @@ final int GH_LEFT=2;
 final int GH_RIGHT=3;
 int ghState=GH_UP;
 
-int animationRate;
+int animationRate=15;
 
 PImage title, gameover, startNormal, startHovered, restartNormal, restartHovered;
 PImage bg, soil0, soil1, soil2, soil3, soil4, soil5, life, stone1, stone2;
@@ -300,18 +300,19 @@ void draw() {
 void keyPressed() {
   // Add your moving input code here
   if (ghState==GH_UP) {
-    animationRate=0;
     switch(keyCode) {
     case DOWN :
       ghState=GH_DOWN;
       soilDown=true;
-
+      animationRate=0;
       break;
     case LEFT :
       ghState=GH_LEFT;
+      animationRate=0;
       break;
     case RIGHT :
       ghState=GH_RIGHT;
+      animationRate=0;
       break;
     }
   }
