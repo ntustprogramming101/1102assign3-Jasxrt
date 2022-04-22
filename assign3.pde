@@ -105,10 +105,56 @@ void draw() {
     fill(253, 184, 19);
     ellipse(590, 50, 120, 120);
 
-    if (soilDown) {
-      pushMatrix();
-      translate(0, soilOffsetY);
+    pushMatrix();
+    if (soilOffsetY>-1600) {
+
+      switch(ghState) {
+      case GH_DOWN:
+        if (animationRate<=15) {
+          soilOffsetY = soilOffsetY-round(80/15);
+          translate(0, soilOffsetY);
+        } else {
+          translate(0, soilOffsetY);
+        }
+        break;
+
+      case GH_UP:
+        translate(0, soilOffsetY);
+        break;
+
+      case GH_LEFT:
+        translate(0, soilOffsetY);
+        break;
+
+      case GH_RIGHT:
+        translate(0, soilOffsetY);
+        break;
+      }
+    } else {
+      soilOffsetY = -1600;
+      switch(ghState) {
+      case GH_DOWN:
+        if (animationRate<15) {
+          translate(0, soilOffsetY);
+        } else {
+          translate(0, soilOffsetY);
+        }
+        break;
+
+      case GH_UP:
+        translate(0, soilOffsetY);
+        break;
+
+      case GH_LEFT:
+        translate(0, soilOffsetY);
+        break;
+
+      case GH_RIGHT:
+        translate(0, soilOffsetY);
+        break;
+      }
     }
+
 
     // Grass
     fill(124, 204, 25);
@@ -207,15 +253,15 @@ void draw() {
       groundhogY-= 80/15.0;
     }
 
-    if (soilDown) {
-      popMatrix();
-    }
+
+    popMatrix();
+
     // Health UI
     for (int i=0; i<playerHealth; i++) {
       image(life, i*70+10, 10);
     }
-    if (playerHealth<1){
-     gameState=GAME_OVER; 
+    if (playerHealth<1) {
+      gameState=GAME_OVER;
     }
     break;
 
@@ -231,6 +277,10 @@ void draw() {
       if (mousePressed) {
         gameState = GAME_RUN;
         playerHealth=2;
+        groundhogX=320;
+        groundhogY=80;
+        soilOffsetY=0;
+        ghState=GH_UP;
         mousePressed = false;
         // Remember to initialize the game here!
       }
@@ -255,11 +305,7 @@ void keyPressed() {
     case DOWN :
       ghState=GH_DOWN;
       soilDown=true;
-      if (groundhogY<1680) {
-        soilOffsetY-= 80;
-      } else {
-        soilOffsetY-=0;
-      }
+
       break;
     case LEFT :
       ghState=GH_LEFT;
